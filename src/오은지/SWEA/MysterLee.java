@@ -1,3 +1,4 @@
+package 오은지.SWEA;
 
 public class MysterLee {
 	public static void main(String[] args) {
