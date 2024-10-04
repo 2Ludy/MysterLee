@@ -1,4 +1,7 @@
-package swea;
+/*
+문제해설 Notion
+https://www.notion.so/swea-1226-1-115634ecbbc48012a3adc366754486b2
+*/
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -20,14 +23,15 @@ public class Solution_1226 { // 미로1 (bfs)
 			T = Integer.parseInt(br.readLine());
 			map = new int[16][16];
 			visited = new boolean[16][16];
-			x = 0;
-			y = 0;
+			x = 0; // 시작 위치 초기화
+			y = 0; // 시작 위치 초기화
 			
+			// 미로 입력
 			for (int i = 0; i < 16; i++) {
 				char[] tmp = br.readLine().toCharArray();
 				for (int j = 0; j < 16; j++) {
 					map[i][j] = tmp[j]-'0';
-					if(map[i][j] == 2) {
+					if(map[i][j] == 2) { // 시작 위치 찾기
 						x = i;
 						y = j;
 					}
@@ -52,12 +56,12 @@ public class Solution_1226 { // 미로1 (bfs)
 				int nr = cur[0] + dr[d];
 				int nc = cur[1] + dc[d];
 				if(!check(nr,nc) || visited[nr][nc]) continue;
-				if(map[nr][nc] == 3) return true;
+				if(map[nr][nc] == 3) return true; // 도착점(3)에 도달 
 				visited[nr][nc] = true;
 				que.offer(new int[] {nr,nc});
 			}
 		}
-		return false;
+		return false; // 도착점에 도달하지 못하면 false
 	}
 
 	static boolean check(int nr, int nc) {
