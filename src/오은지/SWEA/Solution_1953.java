@@ -1,4 +1,7 @@
-package swea;
+/*
+문제풀이 Notion
+https://www.notion.so/swea-1953-115634ecbbc480b59a8efbcf9665da7a
+*/
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -15,8 +18,6 @@ import java.util.StringTokenizer;
 	6 : 하좌
 	7 : 상좌
  */
-
-
 public class Solution_1953 { // 탈주범 검거 (경로 탐색 > bfs)
 	static int T,N,M,R,C,L,loc;
 	static int[][] map;
@@ -24,12 +25,13 @@ public class Solution_1953 { // 탈주범 검거 (경로 탐색 > bfs)
 	static int[] dr = {-1, 1, 0, 0}; // 상하좌우
 	static int[] dc = {0, 0, -1, 1};
 	
+	// 파이프 타입별 이동 가능 방향 정의
 	static int[][] pipeType = {
 			{},
-			{0,1,2,3},
-			{0,1},
-			{2,3},
-			{0,3},
+			{0,1,2,3}, // 1번 파이프 : 상하좌우
+			{0,1}, // 2번 파이프 : 상하
+			{2,3}, // 3번 파이프 : 좌우
+			{0,3}, // ...
 			{1,3},
 			{1,2},
 			{0,2}
@@ -43,15 +45,16 @@ public class Solution_1953 { // 탈주범 검거 (경로 탐색 > bfs)
 		
 		for (int t = 1; t <= T; t++) {
 			StringTokenizer st = new StringTokenizer(br.readLine());
-			N = Integer.parseInt(st.nextToken()); // 행
-			M = Integer.parseInt(st.nextToken()); // 열
+			N = Integer.parseInt(st.nextToken()); // 터널 행
+			M = Integer.parseInt(st.nextToken()); // 터널 열
 			R = Integer.parseInt(st.nextToken()); // 맨홀 행 
 			C = Integer.parseInt(st.nextToken()); // 맨홀 열
-			L = Integer.parseInt(st.nextToken()); // 탈출 시간
+			L = Integer.parseInt(st.nextToken()); // 탈출 소요시간
 			
 			map = new int[N][M];
 			visited = new boolean[N][M];
 			
+			// 터널 입력
 			for (int i = 0; i < N; i++) {
 				st = new StringTokenizer(br.readLine());
 				for (int j = 0; j < M; j++) {
@@ -59,7 +62,7 @@ public class Solution_1953 { // 탈주범 검거 (경로 탐색 > bfs)
 				}
 			}
 			
-			loc = 0; // 탈주범 위치 개수
+			loc = 0; // 탈주범 위치 수 초기화
 			bfs(R,C);
 			
 			sb.append("#"+t+" "+loc+"\n");
@@ -71,9 +74,9 @@ public class Solution_1953 { // 탈주범 검거 (경로 탐색 > bfs)
 
 	static void bfs(int r, int c) {
 		Queue<int[]> que = new LinkedList<>();
-		que.offer(new int[] {r,c,1});
+		que.offer(new int[] {r,c,1}); // 시작좌표, 시간
 		visited[r][c] = true;
-		loc = 1;
+		loc = 1; // 1시간 소요시 맨홀 위치에 탈주범 위치
 		
 		while(!que.isEmpty()) {
 			int cur[] = que.poll();
@@ -81,7 +84,7 @@ public class Solution_1953 { // 탈주범 검거 (경로 탐색 > bfs)
 			int cc = cur[1];
 			int time = cur[2];
 
-			if(time == L) continue;
+			if(time == L) continue; // 입력받은 탈출시간 도달시 탐색 멈춤
 			
 			int type = map[cr][cc];
 			for(int d : pipeType[type]) {
@@ -89,7 +92,7 @@ public class Solution_1953 { // 탈주범 검거 (경로 탐색 > bfs)
 				int nc = cc + dc[d];
 				
 				if(!check(nr,nc)) continue;
-				if(connected(cr,cc,nr,nc)) {
+				if(connected(cr,cc,nr,nc)) { // 현파이프, 다음파이프 연결 유무 확인
 					que.offer(new int[] {nr,nc,time+1});
 					visited[nr][nc] = true;
 					loc++;
@@ -98,6 +101,7 @@ public class Solution_1953 { // 탈주범 검거 (경로 탐색 > bfs)
 		}
 	}
 
+	// 현파이프, 다음파이프 연결 유무 확인
 	static boolean connected(int cx, int cy, int nx, int ny) {
 		int cur = map[cx][cy];
 		int nex = map[nx][ny];
@@ -118,7 +122,7 @@ public class Solution_1953 { // 탈주범 검거 (경로 탐색 > bfs)
 		
 		if(!check) return false;
 		
-		int backdir = getBack(dir);
+		int backdir = getBack(dir); // 뒤쪽 방향도 고려
 		for(int d : pipeType[nex]) {
 			if(d == backdir) return true;
 		}
@@ -126,7 +130,7 @@ public class Solution_1953 { // 탈주범 검거 (경로 탐색 > bfs)
 		return false;
 	}
 
-
+	// 반대 방향
 	private static int getBack(int dir) {
 	    if (dir == 0) return 1;      // 상 -> 하
 	    else if (dir == 1) return 0; // 하 -> 상
