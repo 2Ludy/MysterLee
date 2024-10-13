@@ -5,7 +5,7 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 
-public class Main_2096 {
+public class Main_2096 { // https://www.acmicpc.net/problem/2096 내려가기
 	
 	/*
 	 * 밑으로 내려갈때 인급한 수로만 이동 가능 > 그렇다면 밑에있는 값은 인접한 위의 수들과 계산한 값임
