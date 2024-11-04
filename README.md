@@ -1,5 +1,7 @@
 # SSAFY 알고리즘 스터디 그룹 (2024년 10월)
 
+**깃 이동하였습니다! [바로가기](https://github.com/2Ludy/MysterLee2)**
+
 ![이미지](./mysterlee.png)
 
 ## 스터디 진행사항
