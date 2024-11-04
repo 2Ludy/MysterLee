@@ -1,6 +1,6 @@
 // https://velog.io/@2ludy/boj20056
 
-package baekjoon;
+package baekjoon; 
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
