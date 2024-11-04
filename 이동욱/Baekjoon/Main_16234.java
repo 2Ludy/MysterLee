@@ -1,3 +1,5 @@
+// https://velog.io/@2ludy/boj16234
+
 package baekjoon;
 
 import java.io.BufferedReader;
